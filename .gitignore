@@ -1,2 +1,7 @@
 bin/Debug/*.*
 obj/*.*
+store.db
+obj/Debug
+obj/*.*
+obj/Debug/*.*
+obj/Debug/net9.0/API.AssemblyInfo.cs
