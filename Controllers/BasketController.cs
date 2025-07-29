@@ -1,4 +1,5 @@
 using API.Data;
+using API.DTOs;
 using API.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,13 +10,26 @@ public class BasketController(StoreContext context) : BaseApiController
 {
 
     [HttpGet]
-    public async Task<ActionResult<Basket>> GetBasket()
+    public async Task<ActionResult<BasketDto>> GetBasket()
     {
         var basket = await RetriveBasket();
 
         if (basket == null) return NoContent();
 
-        return basket;
+        return new BasketDto
+        {
+            BasketId = basket.BasketId,
+            Items = basket.Items.Select(x => new BasketItemDto
+            {
+                productId = x.ProductId,
+                Name = x.Product.Name,
+                Price = x.Product.Price,
+                Brand = x.Product.Brand,
+                Type = x.Product.Type,
+                PictureUrl = x.Product.PictureUrl,
+                Quantity = x.Quantity
+            }).ToList()
+        };
 
     }
 
