@@ -77,6 +77,18 @@ public class BasketController(StoreContext context) : BaseApiController
     public async Task<ActionResult> RemoveBasketItem(int productId, int quantity)
     {
         // get basket
+        var basket = await RetriveBasket();
+
+        if(basket == null) return BadRequest(" Unable to retrive basket");
+
+        basket.RemoveItem(productId, quantity);
+
+        var result = await context.SaveChangesAsync() > 0;
+
+        if(result) return Ok();
+
+        return BadRequest("Problem updating basket");
+
         // remove basket
         // save changes
 
