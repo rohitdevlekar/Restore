@@ -22,7 +22,7 @@ namespace API.Controllers
 
             Response.AddPaginationHeader(products.Metadata);
 
-            return Ok(new { Items = products, products.Metadata });
+            return products;
         }
 
         [HttpGet("{id}")]
